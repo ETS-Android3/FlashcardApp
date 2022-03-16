@@ -2,6 +2,7 @@ package com.example.tellasflashcardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -60,6 +61,25 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.choice_trump).setBackgroundColor(Color.parseColor("#f4cccc"));
             }
         });
+
+        findViewById(R.id.button_plus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+                MainActivity.this.startActivityForResult(intent, 1000);
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            String string1 = data.getExtras().getString("quest");
+            String string2 = data.getExtras().getString("ans");
+            System.out.println(string1 + string2);
+        }
     }
 
 }
