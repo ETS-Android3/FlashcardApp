@@ -5,7 +5,7 @@ This is a basic flashcard application that allows user create a question and ans
 
 ### App Walk-though
 
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+<img src="https://github.com/adegbola08/FlashcardApp/blob/master/Lab2%20CodePath.gif" width=200><br>
 
 ## Required
 - [x] User can click on a ‘+’ button that takes the user to new ‘Add Card Screen’
