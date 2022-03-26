@@ -5,7 +5,7 @@ FlashCard application that allows users save created flashcards and navigate thr
 
 ### App Walk-though
 
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+<img src="https://github.com/adegbola08/FlashcardApp/blob/master/Lab3%20CodePath.gif" width=200><br>
 
 
 ## Required
