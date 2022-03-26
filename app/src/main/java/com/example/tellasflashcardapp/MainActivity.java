@@ -9,14 +9,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    FlashcardDatabase flashcardDatabase;
+    List<Flashcard> allFlashcards;
+    int currentCardDisplayedIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        flashcardDatabase = new FlashcardDatabase(getApplicationContext());
+        allFlashcards = flashcardDatabase.getAllCards();
+
+        if (allFlashcards != null && allFlashcards.size() > 0) {
+            ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(0).getQuestion());
+            ((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(0).getAnswer());
+        }
 
         findViewById(R.id.flashcard_question).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         findViewById(R.id.choice_bush).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         findViewById(R.id.reset_but).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.choice_trump).setBackgroundColor(Color.parseColor("#f4cccc"));
             }
         });
+
+         */
 
         findViewById(R.id.button_plus).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +99,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (allFlashcards.size() == 0)
+                    return;
+
+                currentCardDisplayedIndex += 1;
+
+                if(currentCardDisplayedIndex >= allFlashcards.size()) {
+                    Snackbar.make(findViewById(R.id.flashcard_question),
+                            "You've reached the end of the cards, going back to start.",
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+                    currentCardDisplayedIndex = 0;
+                }
+
+                allFlashcards = flashcardDatabase.getAllCards();
+                Flashcard flashcard = allFlashcards.get(currentCardDisplayedIndex);
+
+                ((TextView) findViewById(R.id.flashcard_question)).setText(flashcard.getAnswer());
+                ((TextView) findViewById(R.id.flashcard_answer)).setText(flashcard.getQuestion());
+
+            }
+        });
+
     }
 
 
@@ -94,14 +136,18 @@ public class MainActivity extends AppCompatActivity {
             // System.out.println(string1 + string2);
 
             ((TextView) findViewById(R.id.flashcard_question)).setText(string1);
-            ((TextView) findViewById(R.id.choice_obama)).setText(string2);
+            //((TextView) findViewById(R.id.choice_obama)).setText(string2);
 
             ((TextView) findViewById(R.id.flashcard_answer)).setText(string2);
+
+            flashcardDatabase.insertCard(new Flashcard(string1, string2));
+
+            allFlashcards = flashcardDatabase.getAllCards();
         }
 
-        if (requestCode == 79 && data != null){
+        //if (requestCode == 79 && data != null){
+        //}
 
-        }
     }
 
 }

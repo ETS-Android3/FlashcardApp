@@ -30,7 +30,7 @@
         android:textSize="40sp"
         android:visibility="invisible" />
 
-
+    <!--
     <Button
         android:id="@+id/reset_but"
         android:layout_width="wrap_content"
@@ -47,13 +47,12 @@
         android:id="@+id/choice_bush"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:text="George Bush"
         android:layout_below="@id/flashcard_question"
         android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:textSize="40sp"
         android:background="#f4cccc"
-        />
+        android:gravity="center"
+        android:text="George Bush"
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/choice_obama"
@@ -78,13 +77,13 @@
         android:background="#f4cccc"
         android:layout_marginTop="10dp"
         />
+    -->
 
     <ImageView
         android:id="@+id/button_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/reset_but"
-        android:layout_marginTop="-18dp"
+        android:layout_alignParentBottom="true"
         android:src="@drawable/icon_plus" />
 
     <ImageView
@@ -95,5 +94,13 @@
         android:layout_marginTop="560dp"
         android:src="@drawable/icon_edit" />
 
+    <ImageView
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_next"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="250dp"
+        />
 
 </RelativeLayout>
