@@ -7,7 +7,7 @@ This is a flashcard application that allows users create, view, and store flashc
 
 ### App Walk-though
 
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+<img src="https://github.com/adegbola08/FlashcardApp/blob/master/Lab4%20CodePath.gif" width=200><br>
 
 
 ## Required
