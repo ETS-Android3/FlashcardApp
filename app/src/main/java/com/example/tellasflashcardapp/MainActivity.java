@@ -2,10 +2,15 @@ package com.example.tellasflashcardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         flashcardDatabase = new FlashcardDatabase(getApplicationContext());
         allFlashcards = flashcardDatabase.getAllCards();
 
+        CountDownTimer countDownTimer;
+
+
         if (allFlashcards != null && allFlashcards.size() > 0) {
             ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(0).getQuestion());
             ((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(0).getAnswer());
@@ -34,8 +42,20 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.flashcard_question).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findViewById(R.id.flashcard_answer).setVisibility(View.VISIBLE);
+                View answerSideView = findViewById(R.id.flashcard_answer);
+
+                int cx = answerSideView.getWidth() / 2;
+                int cy = answerSideView.getHeight() / 2;
+
+                float finalRadius = (float) Math.hypot(cx, cy);
+
+                Animator anim = ViewAnimationUtils.createCircularReveal(answerSideView, cx, cy, 0f, finalRadius);
+
                 findViewById(R.id.flashcard_question).setVisibility(View.INVISIBLE);
+                findViewById(R.id.flashcard_answer).setVisibility(View.VISIBLE);
+
+                anim.setDuration(3000);
+                anim.start();
             }
         });
 
@@ -92,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         findViewById(R.id.edit_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,9 +121,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final Animation leftOutAnim = AnimationUtils.loadAnimation
+                        (v.getContext(), R.anim.left_out);
+                final Animation rightInAnim = AnimationUtils.loadAnimation
+                        (v.getContext(), R.anim.right_in);
+
+
+
                 if (allFlashcards.size() == 0)
                     return;
 
@@ -121,6 +151,28 @@ public class MainActivity extends AppCompatActivity {
 
                 ((TextView) findViewById(R.id.flashcard_question)).setText(flashcard.getAnswer());
                 ((TextView) findViewById(R.id.flashcard_answer)).setText(flashcard.getQuestion());
+
+
+
+                leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // this method is called when the animation first starts
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // this method is called when the animation is finished playing
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // we don't need to worry about this method
+                    }
+                });
+
+                findViewById(R.id.flashcard_question).startAnimation(leftOutAnim);
+                findViewById(R.id.flashcard_question).startAnimation(rightInAnim);
 
             }
         });
